@@ -18,6 +18,7 @@
 */
 package org.crosswalk.engine;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -196,13 +197,13 @@ public class XWalkCordovaUiClient extends XWalkUIClient {
                     Log.d(TAG, "permission:" + permissions[i] + " result:" + grantResults[i]);
                 }
                 parentEngine.cordova.setActivityResultCallback(mFileChooserResultPlugin);
-                mFileChooser.showFileChooser(uploadFile, acceptType, capture);
+                mFileChooser.showFileChooser(uploadFile, acceptType, capture, parentEngine.cordova.hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE));
             }
         };
 
         if (!parentEngine.requestPermissionsForFileChooser(listener)) {
             parentEngine.cordova.setActivityResultCallback(mFileChooserResultPlugin);
-            mFileChooser.showFileChooser(uploadFile, acceptType, capture);
+            mFileChooser.showFileChooser(uploadFile, acceptType, capture, parentEngine.cordova.hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE));
         }
     }
 }

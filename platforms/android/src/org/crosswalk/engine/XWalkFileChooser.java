@@ -64,7 +64,7 @@ public class XWalkFileChooser {
     }
 
     public boolean showFileChooser(ValueCallback<Uri> uploadFile, String acceptType,
-            String capture) {
+            String capture, boolean hasExtStoragePermission) {
         mFilePathCallback = uploadFile;
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -122,7 +122,7 @@ public class XWalkFileChooser {
         }
 
         // Couldn't resolve an accept type.
-        if (extraIntents.isEmpty() && canWriteExternalStorage()) {
+        if (extraIntents.isEmpty() && hasExtStoragePermission) {
             if (takePictureIntent != null) {
                 extraIntents.add(takePictureIntent);
             }
